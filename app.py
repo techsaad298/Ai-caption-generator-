@@ -81,4 +81,4 @@ else:
             else:
                 st.warning("Barah-e-karam pehle koi topic likhein!")
         else:
-                st.error("Aap ke tamam free credits khatam ho chuke hain! Mazeed captions ke liye sidebar se Pro plan upgrade karein.")
+            st.error("Aap ke tamam free credits khatam ho chuke hain! Mazeed captions ke liye sidebar se Pro plan upgrade karein.")
