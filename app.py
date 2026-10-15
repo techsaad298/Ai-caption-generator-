@@ -79,8 +79,10 @@ else:
             if topic:
                 with st.spinner("AI is generating your unique caption..."):
                     try:
-                        # Using gemini-2.5-flash / gemini-1.5-flash model
-                        model = genai.GenerativeModel("gemini-1.5-flash")
+                        # Using gemini-2.5-flash / model = genai.GenerativeModel("gemini-2.0-flash")
+
+                        model = genai.GenerativeModel("model = genai.GenerativeModel("gemini-2.0-flash")
+")
                         prompt = f"Write an engaging social media caption with emojis and relevant hashtags about: {topic}"
                         response = model.generate_content(prompt)
                         
