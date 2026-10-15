@@ -4,8 +4,7 @@ import google.generativeai as genai
 st.set_page_config(page_title="AI Caption Generator", page_icon="🚀", layout="centered")
 
 # --- GEMINI API CONFIGURATION ---
-# Yahan apni API Key double quotes ke andar paste karein
-API_KEY = "AQ.Ab8RN6LpvuXLPHU9FqzvAZ8qRwgY2VaPXKJORS7XPSMsG9Svqw"
+API_KEY = "AQ.Ab8RN6IifjOgmUH00PhH-PZxXDP9Oa-tDCVI2kbiGsrYxLB5Ng"
 
 try:
     genai.configure(api_key=API_KEY)
@@ -79,10 +78,7 @@ else:
             if topic:
                 with st.spinner("AI is generating your unique caption..."):
                     try:
-                        # Using gemini-2.5-flash / model = genai.GenerativeModel("gemini-2.0-flash")
-
-                        model = genai.GenerativeModel("model = genai.GenerativeModel("gemini-2.0-flash")
-")
+                        model = genai.GenerativeModel("gemini-2.0-flash")
                         prompt = f"Write an engaging social media caption with emojis and relevant hashtags about: {topic}"
                         response = model.generate_content(prompt)
                         
