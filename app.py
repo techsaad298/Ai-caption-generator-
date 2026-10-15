@@ -1,8 +1,13 @@
 import streamlit as st
+import google.generativeai as genai
 
 st.set_page_config(page_title="AI Caption Generator", page_icon="🚀", layout="centered")
 
-# Initialize Session States for Authentication and Credits
+# Gemini API Key configuration
+API_KEY = "AQ.Ab8RN6JygyNhkdqmgXKM_vbO1b7kFiqkqY9yYlBdIKjfPhK4qA"
+genai.configure(api_key=API_KEY)
+
+# Initialize Session States
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 if "user_email" not in st.session_state:
@@ -44,7 +49,7 @@ if not st.session_state.logged_in:
 
 # --- 2. MAIN APP (AFTER LOGIN) ---
 else:
-    # Sidebar for User Info and Monetization
+    # Sidebar
     st.sidebar.write(f"👤 **{st.session_state.user_email}**")
     if st.sidebar.button("Logout"):
         st.session_state.logged_in = False
@@ -54,7 +59,7 @@ else:
     st.sidebar.subheader("💎 Pro Plan ($9.99/mo)")
     st.sidebar.write("Unlimited AI captions aur advanced features hasil karein!")
     if st.sidebar.button("Upgrade to Pro"):
-        st.sidebar.info("Yahan Stripe payment gateway connect hoga (Agla qadam)!")
+        st.sidebar.info("Yahan Stripe payment gateway connect hoga!")
 
     # Main Dashboard
     st.title("✨ AI CAPTION GENERATOR")
@@ -62,23 +67,23 @@ else:
     
     st.write(f"🎁 Free Credits Left: **{st.session_state.credits}/3**")
 
-    topic = st.text_input("Type your post or topic here...", placeholder="E.g., 5 tips to grow on Instagram...")
+    topic = st.text_input("Type your post or topic here...", placeholder="E.g., How to start YouTube channel for vlogs")
 
     if st.button("Generate Post"):
         if st.session_state.credits > 0:
             if topic:
-                st.session_state.credits -= 1
-                st.success("Here is your AI-generated caption:")
-                st.markdown(f"""
-                **Generated Caption for:** *{topic}*
-
-                🚀 Stop scrolling and read this! If you want to master your niche, you need consistency over perfection. 
-
-                Drop a 🔥 if you agree!
-
-                #ContentCreator #SocialMedia #Growth #AI
-                """)
+                with st.spinner("AI is generating your unique caption..."):
+                    try:
+                        model = genai.GenerativeModel("gemini-1.5-flash")
+                        prompt = f"Write an engaging social media caption with emojis and relevant hashtags about: {topic}"
+                        response = model.generate_content(prompt)
+                        
+                        st.session_state.credits -= 1
+                        st.success("Here is your AI-generated caption:")
+                        st.markdown(response.text)
+                    except Exception as e:
+                        st.error("API Key ka masla hai ya AI response nahi de saka.")
             else:
                 st.warning("Barah-e-karam pehle koi topic likhein!")
         else:
-            st.error("Aap ke tamam free credits khatam ho chuke hain! Mazeed captions ke liye sidebar se Pro plan upgrade karein.")
+            st.error("Aap ke tamam free credits khatam ho chuke hain! Pro plan upgrade karein.")
